@@ -216,7 +216,7 @@ const emit = defineEmits<{
   branchUpdated: []
 }>()
 
-const { branches, updateReservationSettings, operationLoading } = useBranches()
+const { updateReservationSettings, operationLoading, getBranchById } = useBranches()
 const { success, error: showError } = useToast()
 
 // Form state
@@ -334,8 +334,8 @@ function applyToAllDays() {
 function loadBranchDetails() {
   if (!props.branch) return
 
-  // Find the full branch data from the already loaded branches
-  const details = branches.value.find(b => b.id === props.branch!.id)
+  // Get a mutable copy of the branch data
+  const details = getBranchById(props.branch.id)
   if (!details) {
     console.error('Branch not found in loaded branches:', props.branch.id)
     return

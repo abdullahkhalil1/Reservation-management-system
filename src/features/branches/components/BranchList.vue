@@ -200,7 +200,6 @@ import {
 
 // Use the composable
 const {
-  branches,
   loading,
   reservationEnabledBranches,
   totalReservationTables,
@@ -208,6 +207,7 @@ const {
   fetchAllBranches,
   disableReservations,
   disableAllReservations,
+  getBranchById,
 } = useBranches()
 const { success, error } = useToast()
 
@@ -249,7 +249,7 @@ function handleEditBranch(branch: BranchSummary, showErrorToast: boolean = true)
   }
 
   // Check if branch has any tables that accept reservations
-  const branchData = branches.value.find((b: any) => b.id === branch.id)
+  const branchData = getBranchById(branch.id)
   const hasReservationTables = branchData?.sections?.some((section: any) => 
     section.tables?.some((table: any) => table.accepts_reservations)
   )

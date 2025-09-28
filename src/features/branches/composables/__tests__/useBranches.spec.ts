@@ -249,9 +249,11 @@ const mockBranches: Branch[] = [
 describe('useBranches', () => {
   beforeEach(() => {
     vi.clearAllMocks()
-    // Reset the shared state by clearing the branches array
-    const { branches } = useBranches()
-    branches.value = []
+    // Reset the shared state using the test utility
+    const composable = useBranches()
+    if ('_resetState' in composable) {
+      ;(composable as any)._resetState()
+    }
   })
 
   describe('Data Fetching', () => {
@@ -414,9 +416,11 @@ describe('useBranches', () => {
       // Clear all mocks first
       vi.clearAllMocks()
       
-      // Reset shared state
-      const { branches } = useBranches()
-      branches.value = []
+      // Reset shared state using the test utility
+      const composable = useBranches()
+      if ('_resetState' in composable) {
+        ;(composable as any)._resetState()
+      }
       
       // Use a fresh deep copy of mock data to avoid mutations
       const mockGetAllBranches = branchService.getAllBranches as Mock

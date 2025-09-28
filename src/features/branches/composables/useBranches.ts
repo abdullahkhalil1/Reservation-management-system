@@ -1,4 +1,4 @@
-import { ref, computed } from 'vue'
+import { ref, computed, readonly } from 'vue'
 import { branchService } from '../services/branchService'
 import type { Branch, BranchSummary } from '@/shared/types'
 
@@ -205,12 +205,27 @@ export function useBranches() {
     }
   }
 
+  // Internal reset function for testing
+  const _resetState = () => {
+    branches.value = []
+    loading.value = false
+    error.value = null
+    operationLoading.value = false
+    fetchPromise = null
+  }
+
+  // Helper function to get a mutable copy of a branch by ID
+  const getBranchById = (id: string): Branch | null => {
+    const branch = branches.value.find(b => b.id === id)
+    return branch ? JSON.parse(JSON.stringify(branch)) : null
+  }
+
   return {
-    // State
-    branches,
-    loading, // For data fetching (fetch, refresh)
-    operationLoading, // For all branch operations (update, enable, disable)
-    error,
+    // State (readonly for external use)
+    branches: readonly(branches),
+    loading: readonly(loading),
+    operationLoading: readonly(operationLoading),
+    error: readonly(error),
     
     // Computed
     reservationEnabledBranches,
@@ -226,5 +241,11 @@ export function useBranches() {
     disableAllReservations,
     updateReservationSettings,
     enableReservationsBulk,
+    
+    // Utilities
+    getBranchById,
+    
+    // Testing utilities (only use in tests)
+    ...(import.meta.env.MODE === 'test' && { _resetState })
   }
 }

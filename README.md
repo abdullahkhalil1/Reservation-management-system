@@ -225,7 +225,7 @@ const { totalReservationTables, averageDuration } = useBranches()
 
 1. **Clone the repository**:
    ```bash
-   git clone <repository-url>
+   git clone https://github.com/abdullahkhalil1/Reservation-management-system
    cd restaurant-reservation-manager
    ```
 
@@ -254,6 +254,7 @@ const { totalReservationTables, averageDuration } = useBranches()
    # Unit tests
    npm run test:unit
 
+   **Test Coverage Note**: Currently, the project includes comprehensive test suites for the core `useBranches` composable and the `AddBranchModal` component. These tests cover the essential business logic, state management, and component interactions. The testing foundation is established with proper mocking, utilities, and patterns that can be extended to cover additional components as the project evolves.
 
 
 ### Production Build
