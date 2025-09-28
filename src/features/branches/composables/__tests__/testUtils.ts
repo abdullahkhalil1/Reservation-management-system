@@ -1,4 +1,4 @@
-import type { Branch } from '@/types'
+import type { Branch } from '../../types/branch'
 
 /**
  * Test utilities for branch-related tests
